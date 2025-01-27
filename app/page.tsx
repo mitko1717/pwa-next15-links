@@ -1,4 +1,5 @@
 "use client";
+
 import { useEffect, useState } from "react";
 
 function usePwaInstall() {
@@ -38,18 +39,39 @@ export default function Home() {
   const [isIos, setIsIos] = useState(false);
 
   useEffect(() => {
-    if (isPromptAvailable) setShowBanner(true);
+    // Detect iOS device
+    if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+      setIsIos(true);
+    }
+  }, []);
 
-    // Check if the user is on an iOS device
-    const isIosDevice = /iPad|iPhone|iPod/.test(navigator.userAgent);
-    setIsIos(isIosDevice);
-  }, [isPromptAvailable]);
+  useEffect(() => {
+    if (isPromptAvailable && !isIos) {
+      setShowBanner(true); // Show banner on non-iOS devices
+    }
+  }, [isPromptAvailable, isIos]);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
       <h1 className="text-3xl font-bold mb-4">Welcome to the PWA App</h1>
 
-      {/* Show prompt button for supported browsers */}
+      {showBanner && isIos && (
+        <div className="p-4 rounded shadow-md text-center">
+          <p className="mb-2">Install our app for the best experience!</p>
+          <p className="text-sm">
+            On iOS, tap the "Share" icon and select "Add to Home Screen"
+          </p>
+          <button
+            onClick={() => {
+              setShowBanner(false); // Hide banner after showing instructions
+            }}
+            className="px-4 py-2 bg-blue-500 text-white rounded"
+          >
+            Close
+          </button>
+        </div>
+      )}
+
       {showBanner && !isIos && (
         <div className="p-4 rounded shadow-md text-center">
           <p className="mb-2">Install our app for the best experience!</p>
@@ -62,15 +84,6 @@ export default function Home() {
           >
             Install Now
           </button>
-        </div>
-      )}
-
-      {/* Custom iOS install banner */}
-      {isIos && (
-        <div className="p-4 rounded shadow-md text-center">
-          <p className="mb-2">
-            To install this app, please use Safari and tap "Add to Home Screen".
-          </p>
         </div>
       )}
     </div>
