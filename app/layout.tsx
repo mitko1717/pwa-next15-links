@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
+import { ReactNode } from "react";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { ReactNode } from "react";
-import { usePwaInstall } from "@/hooks/pwa";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,19 +23,6 @@ export default function RootLayout({
 }: Readonly<{
   children: ReactNode;
 }>) {
-  let deferredPrompt;
-
-  // window.addEventListener('beforeinstallprompt', (e) => {
-  //   // Prevent the mini-infobar from appearing on mobile
-  //   e.preventDefault();
-  //   // Stash the event so it can be triggered later.
-  //   deferredPrompt = e;
-  //   // Update UI notify the user they can install the PWA
-  //   showInstallPromotion();
-  //   // Optionally, send analytics event that PWA install promo was shown.
-  //   console.log(`'beforeinstallprompt' event was fired.`);
-  // });
-
   return (
     <html lang="en">
       <head>

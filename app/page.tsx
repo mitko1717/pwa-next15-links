@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 function usePwaInstall() {
@@ -78,6 +79,8 @@ export default function Home() {
           </button>
         </div>
       )}
+
+      <Link href={"/test"}>TEST PAGE</Link>
     </div>
   );
 }
