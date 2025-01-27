@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-export function usePwaInstall() {
+function usePwaInstall() {
   const [installPromptEvent, setInstallPromptEvent] = useState<any>(null);
 
   useEffect(() => {
